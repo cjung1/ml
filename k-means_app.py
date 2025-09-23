@@ -23,11 +23,20 @@ def change_label(x,center):
     for i in range(60000):
         b[0][i] = np.argmin(a,axis=1)
     return b
-def update_center(x,center):
+def update_center(x):
     center = np.zeros((10,256))
     for i in range(10):
         XK = x[0][x[1][:] == i]
         center[i][:] = np.mean(XK,axis = 0)
     return center
-def kmeans():
-    
+def kmeans(x,center):
+    i = 0
+    a = center
+    while i < 20 :
+        x[1][:] = change_label(x,a)
+        a = update_center(x)
+        i = i + 1
+    return x,a
+a,center = kmeans(x,center)
+print(a[1][0])
+print(x[1][0])
